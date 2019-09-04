@@ -11,16 +11,11 @@
 </body>
 </html>
 <script>
-  /**
-   *
-   * @param fn 需要返回一个 布尔值 用来关闭轮训
-   * @param time 轮训时间
-   * @returns {Promise<*>}
-   */
-  let handleCloseLoop = false;
-  let loopTimer;
-  let reduce = 20;
-  let countTimer;
+  let handleCloseLoop = false;// 手动关闭轮训方法
+  let loopTimer;// 轮询定时器
+  let reduce = 20;// 模拟请求次数
+  let countTimer;// 模拟后端异步
+  let data = null;// 模拟后端数据
 
   // 关闭轮询方法
   let closeLoop = () => {
@@ -86,18 +81,25 @@
   }
 
   let fn = () => {
-    let flag = false;
     countTimer = setTimeout(() => {
       reduce = reduce -1;
-      if (reduce === 10) {
-        clearInterval(countTimer);
-        flag = true;
+      if (reduce === 15) {
+        clearTimeout(countTimer);
+        data = {
+          code: 200,
+          status: 200,
+          data: {
+            list: [],
+            name: "",
+            acount: ""
+          }
+        };
       }
     }, 1000)
     console.log('fn定时器', countTimer);
     console.log('倒计时', reduce);
-    console.log('flag', flag);
-    return flag;
+    console.log('data', data);
+    return data;
   }
 
   let testLoop = async () => {
