@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let result, result1, result2, result3;
+    let fn = () => {
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                res({
+                    data: 2,
+                    name: '张三'
+                })
+            }, 5000)
+
+        })
+    }
+
+    /* 
+    await fn() 和 fn()的区别
+    await fn()会等待异步代码走完再向下走代码，即result拿到的是对象{data: 2, name: '张三'}
+    fn()拿到的是Promise对象，该promise对象处于pending状态
+    */
+
+    let test = async () => {
+        result = await fn();
+        console.log("result", result);
+        result1 = fn();
+        console.log('result1', result1);
+    }
+    
+    test();
+
+    /* 
+    测试promise里面是同步代码，还会返回promise对象吗？ 
+    结果显示虽然是同步代码，但result2是对象{data: 2, name: '张三'}，result3是Promise pending状态的对象
+    并且输出的结果是，result2,result3,result,result1
+    */
+    let fnAsync = () => {
+        return new Promise((res, rej) => {
+            res({
+                data: 2,
+                name: '张三'
+            })
+        })
+    }
+
+    let test2 = async () => {
+        result2 = await fnAsync();
+        console.log("result2", result2);
+        result3 = fn();
+        console.log('result3', result3);
+    }
+    
+    test2();
+</script>
+
+</html>
