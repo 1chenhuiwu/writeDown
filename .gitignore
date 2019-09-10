@@ -52,3 +52,4 @@
 
 # 忽略根目录下test文件夹及它的所有文件，但不包含其他目录下的test文件夹，比如：a/test（已亲测，是这样）
 /test
+node_modules
