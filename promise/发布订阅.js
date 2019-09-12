@@ -19,6 +19,7 @@ e.on(() => { // 订阅 ，先写好叫订阅
     console.log(school);
   }
 })
+
 fs.readFile('d:\\project\\documentation\\name.txt', 'utf8', (err, data) => {
   school['name'] = data;
   e.emit(); // 发布
